@@ -104,13 +104,17 @@ uint32_t analogRead( uint32_t ulPin )
   uint32_t pin = SAADC_CH_PSELP_PSELP_NC;
   uint32_t saadcResolution;
   uint32_t resolution;
-  int16_t value;
+  int16_t value = 0; // Get rid of compiler warning
 
   if (ulPin >= PINS_COUNT) {
     return 0;
   }
 
+  #ifdef NRF52840
+    ulPin = g_ADigitalPinMap[ulPin].ulPin;
+  #else
   ulPin = g_ADigitalPinMap[ulPin];
+  #endif
 
   switch ( ulPin ) {
     case 2:
@@ -217,7 +221,11 @@ void analogWrite( uint32_t ulPin, uint32_t ulValue )
     return;
   }
 
+  #ifdef NRF52840
+    ulPin = g_ADigitalPinMap[ulPin].ulPin;
+  #else
   ulPin = g_ADigitalPinMap[ulPin];
+  #endif
 
   for (int i = 0; i < PWM_COUNT; i++) {
     if (pwmChannelPins[i] == 0xFFFFFFFF || pwmChannelPins[i] == ulPin) {
