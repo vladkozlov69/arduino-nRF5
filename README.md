@@ -11,9 +11,9 @@ modification https://github.com/sandeepmistry/arduino-nRF5/
 
 ## Supported boards
 
-### ++nRF52840
+### ++ nRF52840
 
-### ++nRF52811
+### ++ nRF52811
 
 ### nRF52832
 
