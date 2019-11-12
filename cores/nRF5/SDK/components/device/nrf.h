@@ -36,6 +36,13 @@
 #define MDK_MINOR_VERSION   5
 #define MDK_MICRO_VERSION   0
 
+/* Define NRF52_SERIES for common use in nRF52 series devices. Only if not previously defined. */
+#if defined (NRF52) || defined (NRF52811) || defined (NRF52840)
+    #ifndef NRF52_SERIES
+        #define NRF52_SERIES
+    #endif
+#endif
+
 #if defined(_WIN32)
     /* Do not include nrf51 specific files when building for PC host */
 #elif defined(__unix)
@@ -54,6 +61,17 @@
         #include "nrf52_bitfields.h"
         #include "nrf51_to_nrf52.h"
         #include "nrf52_name_change.h"
+    #elif defined (NRF52811)
+        #include "nrf52811.h"
+        #include "nrf52811_bitfields.h"  
+        #include "nrf51_to_nrf52810.h"
+        #include "nrf52_to_nrf52810.h"
+        #include "nrf52810_to_nrf52811.h" 
+	#elif defined (NRF52840)
+        #include "nrf52840.h"
+        #include "nrf52840_bitfields.h"
+        #include "nrf51_to_nrf52840.h"
+        #include "nrf52_to_nrf52840.h"
     #else
         #error "Device family must be defined. See nrf.h."
     #endif /* NRF51, NRF52 */
