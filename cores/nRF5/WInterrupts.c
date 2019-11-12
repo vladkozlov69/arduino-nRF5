@@ -24,7 +24,7 @@
 
 #include <string.h>
 
-#ifdef NRF52
+#if defined(NRF52) || defined(NRF52811) || defined(NRF52840)
 #define NUMBER_OF_GPIO_TE 8
 #else
 #define NUMBER_OF_GPIO_TE 4
@@ -125,6 +125,7 @@ void detachInterrupt(uint32_t pin)
   }
 }
 
+__attribute__ ((weak))
 void GPIOTE_IRQHandler()
 {
   uint32_t event = offsetof(NRF_GPIOTE_Type, EVENTS_IN[0]);

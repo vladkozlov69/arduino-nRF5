@@ -28,7 +28,7 @@ extern "C" {
 /*
  * \brief nRF51 and nRF52 have different reference options.
  */
-#ifdef NRF52
+#if defined(NRF52) || defined(NRF52811) || defined(NRF52840)
 typedef enum _eAnalogReference
 {
   AR_DEFAULT,

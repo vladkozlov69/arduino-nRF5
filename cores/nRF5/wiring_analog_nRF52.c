@@ -17,7 +17,7 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifdef NRF52
+#if defined(NRF52) || defined(NRF52811) || defined(NRF52840)
 
 #include "nrf.h"
 
@@ -31,20 +31,40 @@ extern "C" {
 static uint32_t saadcReference = SAADC_CH_CONFIG_REFSEL_Internal;
 static uint32_t saadcGain      = SAADC_CH_CONFIG_GAIN_Gain1_5;
 
+#if defined(NRF52811)
+#define PWM_COUNT 1
+
+static NRF_PWM_Type* pwms[PWM_COUNT] = {
+	NRF_PWM0
+  //NRF_PWM0,
+  //NRF_PWM1,
+  //NRF_PWM2
+};
+
+static uint32_t pwmChannelPins[PWM_COUNT] = {
+	0xFFFFFFFF
+  //0xFFFFFFFF,
+  //0xFFFFFFFF,
+  //0xFFFFFFFF
+};
+#else
 #define PWM_COUNT 3
 
 static NRF_PWM_Type* pwms[PWM_COUNT] = {
   NRF_PWM0,
   NRF_PWM1,
   NRF_PWM2
-};
+};	
 
 static uint32_t pwmChannelPins[PWM_COUNT] = {
   0xFFFFFFFF,
   0xFFFFFFFF,
   0xFFFFFFFF
 };
+#endif
+
 static uint16_t pwmChannelSequence[PWM_COUNT];
+
 
 static int readResolution = 10;
 static int writeResolution = 8;

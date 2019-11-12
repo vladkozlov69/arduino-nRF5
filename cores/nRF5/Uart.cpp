@@ -68,8 +68,10 @@ void Uart::begin(unsigned long baudrate, uint16_t /*config*/)
   nrfUart->PSELRXD = uc_pinRX;
 
   if (uc_hwFlow == 1) {
+
     nrfUart->PSELCTS = uc_pinCTS;
     nrfUart->PSELRTS = uc_pinRTS;
+
     nrfUart->CONFIG = (UART_CONFIG_PARITY_Excluded << UART_CONFIG_PARITY_Pos) | UART_CONFIG_HWFC_Enabled;
   } else {
     nrfUart->CONFIG = (UART_CONFIG_PARITY_Excluded << UART_CONFIG_PARITY_Pos) | UART_CONFIG_HWFC_Disabled;
@@ -78,7 +80,7 @@ void Uart::begin(unsigned long baudrate, uint16_t /*config*/)
 
   uint32_t nrfBaudRate;
 
-#ifdef NRF52
+#if defined(NRF52) || defined(NRF52811) || defined(NRF52840)
   if (baudrate <= 1200) {
     nrfBaudRate = UARTE_BAUDRATE_BAUDRATE_Baud1200;
   } else if (baudrate <= 2400) {
@@ -225,7 +227,7 @@ size_t Uart::write(const uint8_t data)
   return 1;
 }
 
-#if defined(NRF52)
+#if defined(NRF52) || defined(NRF52811) || defined(NRF52840)
   #define NRF_UART0_IRQn UARTE0_UART0_IRQn
 #elif defined(NRF51)
   #define NRF_UART0_IRQn UART0_IRQn
@@ -237,7 +239,7 @@ size_t Uart::write(const uint8_t data)
   Uart Serial( NRF_UART0, NRF_UART0_IRQn, PIN_SERIAL_RX, PIN_SERIAL_TX );
 #endif
 
-#if defined(NRF52)
+#if defined(NRF52) || defined(NRF52811) || defined(NRF52840)
 extern "C"
 {
   void UARTE0_UART0_IRQHandler()
