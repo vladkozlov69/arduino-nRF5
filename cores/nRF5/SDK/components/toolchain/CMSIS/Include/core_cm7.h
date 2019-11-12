@@ -2004,7 +2004,7 @@ __STATIC_INLINE void NVIC_SystemReset(void)
                             SCB_AIRCR_SYSRESETREQ_Msk    );         /* Keep priority group unchanged */
   __DSB();                                                          /* Ensure completion of memory access */
 
-  for(;;)                                                           /* wait until reset */
+  for (;;)                                                           /* wait until reset */
   {
     __NOP();
   }
@@ -2143,7 +2143,7 @@ __STATIC_INLINE void SCB_EnableDCache (void)
           __schedule_barrier();
         #endif
       } while (ways--);
-    } while(sets--);
+    } while (sets--);
     __DSB();
 
     SCB->CCR |=  (uint32_t)SCB_CCR_DC_Msk;  /* enable D-Cache */
@@ -2183,7 +2183,7 @@ __STATIC_INLINE void SCB_DisableDCache (void)
           __schedule_barrier();
         #endif
       } while (ways--);
-    } while(sets--);
+    } while (sets--);
 
     __DSB();
     __ISB();
@@ -2218,7 +2218,7 @@ __STATIC_INLINE void SCB_InvalidateDCache (void)
           __schedule_barrier();
         #endif
       } while (ways--);
-    } while(sets--);
+    } while (sets--);
 
     __DSB();
     __ISB();
@@ -2253,7 +2253,7 @@ __STATIC_INLINE void SCB_CleanDCache (void)
           __schedule_barrier();
         #endif
       } while (ways--);
-    } while(sets--);
+    } while (sets--);
 
     __DSB();
     __ISB();
@@ -2288,7 +2288,7 @@ __STATIC_INLINE void SCB_CleanInvalidateDCache (void)
           __schedule_barrier();
         #endif
       } while (ways--);
-    } while(sets--);
+    } while (sets--);
 
     __DSB();
     __ISB();
