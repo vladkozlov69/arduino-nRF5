@@ -21,6 +21,79 @@ menu.version=Version
 menu.lfclk=Low Frequency Clock
 menu.board_variant=Board Variant
 
+
+
+
+# nRF52840 variants
+###################
+
+Generic_nRF52840.name=Generic nRF52840
+
+Generic_nRF52840.upload.tool=sandeepmistry:openocd
+Generic_nRF52840.upload.target=nrf52
+Generic_nRF52840.upload.maximum_size=524288
+
+Generic_nRF52840.bootloader.tool=sandeepmistry:openocd
+
+Generic_nRF52840.build.mcu=cortex-m4
+Generic_nRF52840.build.f_cpu=16000000
+Generic_nRF52840.build.board=GENERIC
+Generic_nRF52840.build.core=nRF5
+Generic_nRF52840.build.variant=Generic
+Generic_nRF52840.build.variant_system_lib=
+Generic_nRF52840.build.extra_flags=-DNRF52840
+Generic_nRF52840.build.float_flags=-mfloat-abi=hard -mfpu=fpv4-sp-d16
+Generic_nRF52840.build.ldscript=nrf52840_xxaa.ld
+
+Generic_nRF52840.menu.softdevice.none=None
+Generic_nRF52840.menu.softdevice.none.softdevice=none
+Generic_nRF52840.menu.softdevice.none.softdeviceversion=
+
+Generic_nRF52840.menu.lfclk.lfxo=Crystal Oscillator
+Generic_nRF52840.menu.lfclk.lfxo.build.lfclk_flags=-DUSE_LFXO
+Generic_nRF52840.menu.lfclk.lfrc=RC Oscillator
+Generic_nRF52840.menu.lfclk.lfrc.build.lfclk_flags=-DUSE_LFRC
+Generic_nRF52840.menu.lfclk.lfsynt=Synthesized
+Generic_nRF52840.menu.lfclk.lfsynt.build.lfclk_flags=-DUSE_LFSYNT
+
+
+
+
+# nRF52811 variants
+###################
+
+Generic_nRF52811.name=Generic nRF52811
+
+Generic_nRF52811.upload.tool=sandeepmistry:openocd
+Generic_nRF52811.upload.target=nrf52
+Generic_nRF52811.upload.maximum_size=196608
+
+Generic_nRF52811.bootloader.tool=sandeepmistry:openocd
+
+Generic_nRF52811.build.mcu=cortex-m4
+Generic_nRF52811.build.f_cpu=16000000
+Generic_nRF52811.build.board=GENERIC
+Generic_nRF52811.build.core=nRF5
+Generic_nRF52811.build.variant=Generic
+Generic_nRF52811.build.variant_system_lib=
+Generic_nRF52811.build.extra_flags=-DNRF52811
+Generic_nRF52811.build.float_flags=-mfloat-abi=soft
+Generic_nRF52811.build.ldscript=nrf52811_xxaa.ld
+
+Generic_nRF52811.menu.softdevice.none=None
+Generic_nRF52811.menu.softdevice.none.softdevice=none
+Generic_nRF52811.menu.softdevice.none.softdeviceversion=
+
+Generic_nRF52811.menu.lfclk.lfxo=Crystal Oscillator
+Generic_nRF52811.menu.lfclk.lfxo.build.lfclk_flags=-DUSE_LFXO
+Generic_nRF52811.menu.lfclk.lfrc=RC Oscillator
+Generic_nRF52811.menu.lfclk.lfrc.build.lfclk_flags=-DUSE_LFRC
+Generic_nRF52811.menu.lfclk.lfsynt=Synthesized
+Generic_nRF52811.menu.lfclk.lfsynt.build.lfclk_flags=-DUSE_LFSYNT
+
+
+
+
 # nRF52832 variants
 ###################
 
@@ -136,42 +209,6 @@ hackaBLE.menu.lfclk.lfrc.build.lfclk_flags=-DUSE_LFRC
 hackaBLE.menu.lfclk.lfsynt=Synthesized
 hackaBLE.menu.lfclk.lfsynt.build.lfclk_flags=-DUSE_LFSYNT
 
-
-hackaBLE_v2.name=Electronut labs hackaBLE_v2
-
-hackaBLE_v2.upload.tool=sandeepmistry:openocd
-hackaBLE_v2.upload.target=nrf52
-hackaBLE_v2.upload.maximum_size=524288
-
-hackaBLE_v2.bootloader.tool=sandeepmistry:openocd
-
-hackaBLE_v2.build.mcu=cortex-m4
-hackaBLE_v2.build.f_cpu=16000000
-hackaBLE_v2.build.board=ELECTRONUT_hackaBLE_v2
-hackaBLE_v2.build.core=nRF5
-hackaBLE_v2.build.variant=hackaBLE_v2
-hackaBLE_v2.build.variant_system_lib=
-hackaBLE_v2.build.extra_flags=-DNRF52
-hackaBLE_v2.build.float_flags=-mfloat-abi=hard -mfpu=fpv4-sp-d16
-hackaBLE_v2.build.ldscript=nrf52_xxaa.ld
-
-hackaBLE_v2.menu.softdevice.none=None
-hackaBLE_v2.menu.softdevice.none.softdevice=none
-hackaBLE_v2.menu.softdevice.none.softdeviceversion=
-
-hackaBLE_v2.menu.softdevice.s132=S132
-hackaBLE_v2.menu.softdevice.s132.softdevice=s132
-hackaBLE_v2.menu.softdevice.s132.softdeviceversion=2.0.1
-hackaBLE_v2.menu.softdevice.s132.upload.maximum_size=409600
-hackaBLE_v2.menu.softdevice.s132.build.extra_flags=-DNRF52 -DS132 -DNRF51_S132
-hackaBLE_v2.menu.softdevice.s132.build.ldscript=armgcc_s132_nrf52832_xxaa.ld
-
-hackaBLE_v2.menu.lfclk.lfxo=Crystal Oscillator
-hackaBLE_v2.menu.lfclk.lfxo.build.lfclk_flags=-DUSE_LFXO
-hackaBLE_v2.menu.lfclk.lfrc=RC Oscillator
-hackaBLE_v2.menu.lfclk.lfrc.build.lfclk_flags=-DUSE_LFRC
-hackaBLE_v2.menu.lfclk.lfsynt=Synthesized
-hackaBLE_v2.menu.lfclk.lfsynt.build.lfclk_flags=-DUSE_LFSYNT
 
 Blend2.name=RedBear Blend 2
 
@@ -948,79 +985,3 @@ Sinobit.menu.softdevice.s130.softdeviceversion=2.0.1
 Sinobit.menu.softdevice.s130.upload.maximum_size=151552
 Sinobit.menu.softdevice.s130.build.extra_flags=-DNRF51 -DS130 -DNRF51_S130
 Sinobit.menu.softdevice.s130.build.ldscript=armgcc_s130_nrf51822_xxaa.ld
-
-DWM1001-DEV.name=decaWave DWM1001 Module Development Board
-
-DWM1001-DEV.upload.tool=sandeepmistry:openocd
-DWM1001-DEV.upload.protocol=jlink
-DWM1001-DEV.upload.target=nrf52
-DWM1001-DEV.upload.maximum_size=524288
-DWM1001-DEV.upload.setup_command=transport select swd;
-DWM1001-DEV.upload.use_1200bps_touch=false
-DWM1001-DEV.upload.wait_for_upload_port=false
-DWM1001-DEV.upload.native_usb=false
-
-DWM1001-DEV.bootloader.tool=sandeepmistry:openocd
-
-DWM1001-DEV.build.mcu=cortex-m4
-DWM1001-DEV.build.f_cpu=16000000
-DWM1001-DEV.build.board=DWM1001_DEV
-DWM1001-DEV.build.core=nRF5
-DWM1001-DEV.build.variant=DWM1001-DEV
-DWM1001-DEV.build.variant_system_lib=
-DWM1001-DEV.build.extra_flags=-DNRF52
-DWM1001-DEV.build.float_flags=-mfloat-abi=hard -mfpu=fpv4-sp-d16
-DWM1001-DEV.build.ldscript=nrf52_xxaa.ld
-
-DWM1001-DEV.build.lfclk_flags=-DUSE_LFXO
-
-DWM1001-DEV.menu.softdevice.none=None
-DWM1001-DEV.menu.softdevice.none.softdevice=none
-DWM1001-DEV.menu.softdevice.none.softdeviceversion=
-
-DWM1001-DEV.menu.softdevice.s132=S132
-DWM1001-DEV.menu.softdevice.s132.softdevice=s132
-DWM1001-DEV.menu.softdevice.s132.softdeviceversion=2.0.1
-DWM1001-DEV.menu.softdevice.s132.upload.maximum_size=409600
-DWM1001-DEV.menu.softdevice.s132.build.extra_flags=-DNRF52 -DS132 -DNRF51_S132
-DWM1001-DEV.menu.softdevice.s132.build.ldscript=armgcc_s132_nrf52832_xxaa.ld
-
-SeeedArchLink.name=Seeed Arch Link
-
-SeeedArchLink.upload.tool=sandeepmistry:openocd
-SeeedArchLink.upload.target=nrf51
-SeeedArchLink.upload.protocol=cmsis-dap
-SeeedArchLink.upload.maximum_size=262144
-
-SeeedArchLink.bootloader.tool=sandeepmistry:openocd
-
-SeeedArchLink.build.mcu=cortex-m0
-SeeedArchLink.build.f_cpu=16000000
-SeeedArchLink.build.board=ARCHLINK
-SeeedArchLink.build.core=nRF5
-SeeedArchLink.build.variant=SeeedArchLink
-SeeedArchLink.build.variant_system_lib=
-SeeedArchLink.build.extra_flags=-DNRF51
-SeeedArchLink.build.float_flags=
-SeeedArchLink.build.ldscript=nrf51_xxaa.ld
-
-SeeedArchLink.build.lfclk_flags=-DUSE_LFXO
-
-SeeedArchLink.menu.softdevice.none=None
-SeeedArchLink.menu.softdevice.none.softdevice=none
-SeeedArchLink.menu.softdevice.none.softdeviceversion=
-
-SeeedArchLink.menu.softdevice.s110=S110
-SeeedArchLink.menu.softdevice.s110.softdevice=s110
-SeeedArchLink.menu.softdevice.s110.softdeviceversion=8.0.0
-SeeedArchLink.menu.softdevice.s110.upload.maximum_size=151552
-SeeedArchLink.menu.softdevice.s110.build.extra_flags=-DNRF51 -DS110 -DNRF51_S110
-SeeedArchLink.menu.softdevice.s110.build.ldscript=armgcc_s110_nrf51822_xxaa.ld
-
-SeeedArchLink.menu.softdevice.s130=S130
-SeeedArchLink.menu.softdevice.s130.softdevice=s130
-SeeedArchLink.menu.softdevice.s130.softdeviceversion=2.0.1
-SeeedArchLink.menu.softdevice.s130.upload.maximum_size=151552
-SeeedArchLink.menu.softdevice.s130.build.extra_flags=-DNRF51 -DS130 -DNRF51_S130
-SeeedArchLink.menu.softdevice.s130.build.ldscript=armgcc_s130_nrf51822_xxaa.ld
-

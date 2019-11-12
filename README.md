@@ -90,8 +90,6 @@ Become a sponsor and get your logo on our README on Github with a link to your s
  * [RedBear Nano 2](https://github.com/redbear/nRF5x#ble-nano-2)
  * [Bluey](https://github.com/electronut/ElectronutLabs-bluey)
  * [hackaBLE](https://github.com/electronut/ElectronutLabs-hackaBLE)
- * [hackaBLE_v2](https://github.com/electronut/ElectronutLabs-hackaBLE)
- * [DWM1001-DEV](https://www.decawave.com/product/dwm1001-development-board/)
 
 ### nRF51
  * [Plain nRF51 MCU](https://www.nordicsemi.com/eng/Products/Bluetooth-low-energy/nRF51822)
@@ -109,7 +107,6 @@ Become a sponsor and get your logo on our README on Github with a link to your s
  * [ng-beacon](https://github.com/urish/ng-beacon)
  * [TinyBLE](https://www.seeedstudio.com/Seeed-Tiny-BLE-BLE-%2B-6DOF-Mbed-Platform-p-2268.html)
  * [Sino:bit](http://sinobit.org)
- * [SeeedArchLink](http://wiki.seeedstudio.com/Arch_Link/)
 
 ## Installing
 
