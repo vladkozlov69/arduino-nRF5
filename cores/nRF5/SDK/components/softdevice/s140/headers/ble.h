@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2019, Nordic Semiconductor ASA
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -527,18 +527,17 @@ SVCALL(SD_BLE_UUID_VS_ADD, uint32_t, sd_ble_uuid_vs_add(ble_uuid128_t const *p_v
  *
  * @note Currently this function can only be called with a p_uuid_type set to @ref BLE_UUID_TYPE_UNKNOWN or the last added UUID type.
  *
- * @param[in]  p_uuid_type  Pointer to a uint8_t where the type field in @ref ble_uuid_t::type corresponds to the UUID type that
- *                          shall be removed. If the type is set to @ref BLE_UUID_TYPE_UNKNOWN, or the pointer is NULL, the last
- *                          Vendor Specific base UUID will be removed.
- * @param[out] p_uuid_type  Pointer to a uint8_t where the type field in @ref ble_uuid_t corresponds to the UUID type that was
- *                          removed. If function returns with a failure, it contains the last type that is in use by the ATT Server.
+ * @param[inout] p_uuid_type Pointer to a uint8_t where its value matches the UUID type in @ref ble_uuid_t::type to be removed.
+ *                           If the type is set to @ref BLE_UUID_TYPE_UNKNOWN, or the pointer is NULL, the last Vendor Specific
+ *                           base UUID will be removed. If the function returns successfully, the UUID type that was removed will
+ *                           be written back to @p p_uuid_type. If function returns with a failure, it contains the last type that
+ *                           is in use by the ATT Server.
  *
  * @retval ::NRF_SUCCESS Successfully removed the Vendor Specific base UUID.
  * @retval ::NRF_ERROR_INVALID_ADDR If p_uuid_type is invalid.
  * @retval ::NRF_ERROR_INVALID_PARAM If p_uuid_type points to a non-valid UUID type.
  * @retval ::NRF_ERROR_FORBIDDEN If the Vendor Specific base UUID is in use by the ATT Server.
  */
-
 SVCALL(SD_BLE_UUID_VS_REMOVE, uint32_t, sd_ble_uuid_vs_remove(uint8_t *p_uuid_type));
 
 
@@ -619,10 +618,6 @@ SVCALL(SD_BLE_USER_MEM_REPLY, uint32_t, sd_ble_user_mem_reply(uint16_t conn_hand
 /**@brief Set a BLE option.
  *
  * @details This call allows the application to set the value of an option.
- *
- * @mscs
- * @mmsc{@ref BLE_GAP_PERIPH_BONDING_STATIC_PK_MSC}
- * @endmscs
  *
  * @param[in] opt_id Option ID, see @ref BLE_COMMON_OPTS and @ref BLE_GAP_OPTS.
  * @param[in] p_opt Pointer to a ble_opt_t structure containing the option value.
