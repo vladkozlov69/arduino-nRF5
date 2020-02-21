@@ -5,18 +5,30 @@ GROUP(-lgcc -lc -lnosys)
 
 MEMORY
 {
-  FLASH (rx) : ORIGIN = 0x1c000, LENGTH = 0x64000
-  RAM (rwx) :  ORIGIN = 0x20002080, LENGTH = 0xdf80
+  FLASH (rx) : ORIGIN = 0x26000, LENGTH = 0x5a000
+  RAM (rwx) :  ORIGIN = 0x20003318, LENGTH = 0xCCE8
 }
 
 SECTIONS
 {
-  .fs_data :
+}
+
+SECTIONS
+{
+  . = ALIGN(4);
+  .mem_section_dummy_ram :
   {
-    PROVIDE(__start_fs_data = .);
-    KEEP(*(.fs_data))
-    PROVIDE(__stop_fs_data = .);
-  } > RAM
+  }
+
 } INSERT AFTER .data;
 
-INCLUDE "nrf5x_common.ld"
+SECTIONS
+{
+  .mem_section_dummy_rom :
+  {
+  }
+
+} INSERT AFTER .text
+
+
+INCLUDE "nrf_common.ld"
