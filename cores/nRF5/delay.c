@@ -25,7 +25,15 @@
 extern "C" {
 #endif
 
+
 static volatile uint32_t overflows = 0;
+
+void (*rtc1_overflow_callback)(void) = NULL;
+
+void registerRTC1OverflowCallback(void (*func_ptr)(void))
+{
+  rtc1_overflow_callback = func_ptr;
+}
 
 uint32_t millis( void )
 {
@@ -66,6 +74,11 @@ void RTC1_IRQHandler(void)
 #endif
 
   overflows = (overflows + 1) & 0xff;
+
+  if (rtc1_overflow_callback)
+  {
+    rtc1_overflow_callback();
+  }
 }
 
 #ifdef __cplusplus
