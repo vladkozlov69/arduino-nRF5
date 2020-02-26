@@ -46,6 +46,8 @@ extern uint32_t millis( void ) ;
  */
 extern void registerRTC1OverflowCallback(void (*func_ptr)(void));
 
+extern void registerRTC1CompareCallback(void (*func_ptr)(void), uint32_t value);
+
 /**
  * \brief Returns the number of microseconds since the Arduino board began running the current program.
  *
