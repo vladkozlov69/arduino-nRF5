@@ -28,15 +28,11 @@ extern "C" {
 
 static volatile uint32_t overflows = 0;
 
-void (*rtc1_overflow_callback)(void) = NULL;
+__WEAK void RTC1_OVRFLW_Handler(void);
 
 void (*rtc1_compare_callback)(void) = NULL;
 static volatile uint32_t rtc1_compare_value = 0;
 
-void registerRTC1OverflowCallback(void (*func_ptr)(void))
-{
-  rtc1_overflow_callback = func_ptr;
-}
 
 void registerRTC1CompareCallback(void (*func_ptr)(void), uint32_t value)
 {
@@ -87,10 +83,7 @@ void RTC1_IRQHandler(void)
 
     overflows = (overflows + 1) & 0xff;
 
-    if (rtc1_overflow_callback)
-    {
-      rtc1_overflow_callback();
-    }
+    RTC1_OVRFLW_Handler();
   }
 
   if (NRF_RTC1->EVENTS_COMPARE[0])
