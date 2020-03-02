@@ -23,6 +23,7 @@
  extern "C" {
 #endif
 
+#include "nrf.h"
 // #include "WVariant.h"
 
 /**
@@ -63,6 +64,8 @@ extern void digitalWrite( uint32_t dwPin, uint32_t dwVal ) ;
  * \return HIGH or LOW
  */
 extern int digitalRead( uint32_t ulPin ) ;
+
+NRF_GPIO_Type * nrf_gpio_pin_port_decode(uint32_t * p_pin);
 
 #ifdef __cplusplus
 }

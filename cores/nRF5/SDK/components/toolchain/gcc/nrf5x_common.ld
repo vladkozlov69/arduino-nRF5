@@ -122,29 +122,36 @@ SECTIONS
 
     } > RAM
 
+    . = ALIGN(8);
     .bss :
     {
-        . = ALIGN(4);
+        . = ALIGN(8);
         __bss_start__ = .;
         *(.bss*)
         *(COMMON)
-        . = ALIGN(4);
+        . = ALIGN(8);
         __bss_end__ = .;
     } > RAM
     
+    . = ALIGN(8);
     .heap (COPY):
     {
+        . = ALIGN(8);
         __end__ = .;
         PROVIDE(end = .);
         *(.heap*)
+        . = ALIGN(8);
         __HeapLimit = .;
     } > RAM
 
     /* .stack_dummy section doesn't contains any symbols. It is only
      * used for linker to calculate size of stack sections, and assign
      * values to stack symbols later */
+
+    . = ALIGN(8);
     .stack_dummy (COPY):
     {
+        . = ALIGN(8);
         *(.stack*)
     } > RAM
 

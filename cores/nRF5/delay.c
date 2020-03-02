@@ -25,7 +25,21 @@
 extern "C" {
 #endif
 
+
 static volatile uint32_t overflows = 0;
+
+__WEAK void RTC1_OVRFLW_Handler(void);
+
+void (*rtc1_compare_callback)(void) = NULL;
+static volatile uint32_t rtc1_compare_value = 0;
+
+
+void registerRTC1CompareCallback(void (*func_ptr)(void), uint32_t value)
+{
+  rtc1_compare_callback = func_ptr;
+  rtc1_compare_value = value;
+  NRF_RTC1->CC[0] = rtc1_compare_value;
+}
 
 uint32_t millis( void )
 {
@@ -58,14 +72,33 @@ void delay( uint32_t ms )
 
 void RTC1_IRQHandler(void)
 {
-  NRF_RTC1->EVENTS_OVRFLW = 0;
+  if (NRF_RTC1->EVENTS_OVRFLW)
+  {
+    NRF_RTC1->EVENTS_OVRFLW = 0;
 
 #if __CORTEX_M == 0x04
     volatile uint32_t dummy = NRF_RTC1->EVENTS_OVRFLW;
     (void)dummy;
 #endif
 
-  overflows = (overflows + 1) & 0xff;
+    overflows = (overflows + 1) & 0xff;
+
+    RTC1_OVRFLW_Handler();
+  }
+
+  if (NRF_RTC1->EVENTS_COMPARE[0])
+  {
+      NRF_RTC1->EVENTS_COMPARE[0] = 0;
+#if __CORTEX_M == 0x04
+      volatile uint32_t dummy = NRF_RTC1->EVENTS_COMPARE[0];
+      (void)dummy;
+#endif
+      NRF_RTC1->CC[0] = (rtc1_compare_value + NRF_RTC1->CC[0]) % 0xFFFFFF;
+      if (rtc1_compare_callback)
+      {
+        rtc1_compare_callback();
+      }
+  }
 }
 
 #ifdef __cplusplus

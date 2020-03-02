@@ -39,6 +39,16 @@ extern "C" {
 extern uint32_t millis( void ) ;
 
 /**
+ * \brief Registering callback function for RTC1
+ * 
+ * That function, if defined, will be called on each RTC1 OVRFLW event. 
+ * With prescaler=0, the calling interval will be 512 seconds.
+ */
+extern void registerRTC1OverflowCallback(void (*func_ptr)(void));
+
+extern void registerRTC1CompareCallback(void (*func_ptr)(void), uint32_t value);
+
+/**
  * \brief Returns the number of microseconds since the Arduino board began running the current program.
  *
  * This number will overflow (go back to zero), after approximately 70 minutes. On 16 MHz Arduino boards

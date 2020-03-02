@@ -25,8 +25,11 @@ Uart::Uart(NRF_UART_Type *_nrfUart, IRQn_Type _IRQn, uint8_t _pinRX, uint8_t _pi
 {
   nrfUart = _nrfUart;
   IRQn = _IRQn;
-  uc_pinRX = g_ADigitalPinMap[_pinRX];
-  uc_pinTX = g_ADigitalPinMap[_pinTX];
+  uc_pinRX = _pinRX;
+  uc_pinTX = _pinTX;
+  pinMode(uc_pinRX, INPUT);
+  pinMode(uc_pinTX, OUTPUT);
+  digitalWrite(uc_pinTX, HIGH);
   uc_hwFlow = 0;
 }
 
@@ -34,26 +37,32 @@ Uart::Uart(NRF_UART_Type *_nrfUart, IRQn_Type _IRQn, uint8_t _pinRX, uint8_t _pi
 {
   nrfUart = _nrfUart;
   IRQn = _IRQn;
-  uc_pinRX = g_ADigitalPinMap[_pinRX];
-  uc_pinTX = g_ADigitalPinMap[_pinTX];
-  uc_pinCTS = g_ADigitalPinMap[_pinCTS];
-  uc_pinRTS = g_ADigitalPinMap[_pinRTS];
+  uc_pinRX = _pinRX;
+  uc_pinTX = _pinTX;
+  uc_pinCTS = _pinCTS;
+  uc_pinRTS = _pinRTS;
+  pinMode(uc_pinRX, INPUT);
+  pinMode(uc_pinCTS, INPUT);
+  pinMode(uc_pinTX, OUTPUT);
+  pinMode(uc_pinRTS, OUTPUT);
+  digitalWrite(uc_pinTX, HIGH);
+  digitalWrite(uc_pinRTS, HIGH);
   uc_hwFlow = 1;
 }
 
 #ifdef ARDUINO_GENERIC
 void Uart::setPins(uint8_t _pinRX, uint8_t _pinTX)
 {
-  uc_pinRX = g_ADigitalPinMap[_pinRX];
-  uc_pinTX = g_ADigitalPinMap[_pinTX];
+  uc_pinRX = _pinRX;
+  uc_pinTX = _pinTX;
 }
 
 void Uart::setPins(uint8_t _pinRX, uint8_t _pinTX, uint8_t _pinCTS, uint8_t _pinRTS)
 {
-  uc_pinRX = g_ADigitalPinMap[_pinRX];
-  uc_pinTX = g_ADigitalPinMap[_pinTX];
-  uc_pinCTS = g_ADigitalPinMap[_pinCTS];
-  uc_pinRTS = g_ADigitalPinMap[_pinRTS];
+  uc_pinRX = _pinRX;
+  uc_pinTX = _pinTX;
+  uc_pinCTS = _pinCTS;
+  uc_pinRTS = _pinRTS;
 }
 #endif // ARDUINO_GENERIC
 
@@ -64,17 +73,26 @@ void Uart::begin(unsigned long baudrate)
 
 void Uart::begin(unsigned long baudrate, uint16_t /*config*/)
 {
-  nrfUart->PSELTXD = uc_pinTX;
-  nrfUart->PSELRXD = uc_pinRX;
+  #ifdef NRF52840
+  nrfUart->PSELTXD = NRF_GPIO_PIN_MAP(g_ADigitalPinMap[uc_pinTX].ulPort,g_ADigitalPinMap[uc_pinTX].ulPin);
+  nrfUart->PSELRXD = NRF_GPIO_PIN_MAP(g_ADigitalPinMap[uc_pinRX].ulPort,g_ADigitalPinMap[uc_pinRX].ulPin);
+  #else
+  nrfUart->PSELTXD = g_ADigitalPinMap[uc_pinTX];
+  nrfUart->PSELRXD = g_ADigitalPinMap[uc_pinRX];
+  #endif
 
   if (uc_hwFlow == 1) {
-    nrfUart->PSELCTS = uc_pinCTS;
-    nrfUart->PSELRTS = uc_pinRTS;
+    #ifdef NRF52840
+    nrfUart->PSELCTS = NRF_GPIO_PIN_MAP(g_ADigitalPinMap[uc_pinCTS].ulPort,g_ADigitalPinMap[uc_pinCTS].ulPin);
+    nrfUart->PSELRTS = NRF_GPIO_PIN_MAP(g_ADigitalPinMap[uc_pinRTS].ulPort,g_ADigitalPinMap[uc_pinRTS].ulPin);
+    #else
+    nrfUart->PSELCTS = g_ADigitalPinMap[uc_pinCTS];
+    nrfUart->PSELRTS = g_ADigitalPinMap[uc_pinRTS];
+    #endif
     nrfUart->CONFIG = (UART_CONFIG_PARITY_Excluded << UART_CONFIG_PARITY_Pos) | UART_CONFIG_HWFC_Enabled;
   } else {
     nrfUart->CONFIG = (UART_CONFIG_PARITY_Excluded << UART_CONFIG_PARITY_Pos) | UART_CONFIG_HWFC_Disabled;
   }
-
 
   uint32_t nrfBaudRate;
 

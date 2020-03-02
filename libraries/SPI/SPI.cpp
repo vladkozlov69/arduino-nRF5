@@ -36,9 +36,9 @@ SPIClass::SPIClass(NRF_SPI_Type *p_spi, uint8_t uc_pinMISO, uint8_t uc_pinSCK, u
   _p_spi = p_spi;
 
   // pins
-  _uc_pinMiso = g_ADigitalPinMap[uc_pinMISO];
-  _uc_pinSCK = g_ADigitalPinMap[uc_pinSCK];
-  _uc_pinMosi = g_ADigitalPinMap[uc_pinMOSI];
+  _uc_pinMiso = uc_pinMISO;
+  _uc_pinSCK = uc_pinSCK;
+  _uc_pinMosi = uc_pinMOSI;
 
   _dataMode = SPI_MODE0;
   _bitOrder = SPI_CONFIG_ORDER_MsbFirst;
@@ -47,9 +47,9 @@ SPIClass::SPIClass(NRF_SPI_Type *p_spi, uint8_t uc_pinMISO, uint8_t uc_pinSCK, u
 #ifdef ARDUINO_GENERIC
 void SPIClass::setPins(uint8_t uc_pinMISO, uint8_t uc_pinSCK, uint8_t uc_pinMOSI)
 {
-  _uc_pinMiso = g_ADigitalPinMap[uc_pinMISO];
-  _uc_pinSCK = g_ADigitalPinMap[uc_pinSCK];
-  _uc_pinMosi = g_ADigitalPinMap[uc_pinMOSI];
+  _uc_pinMiso = uc_pinMISO;
+  _uc_pinSCK = uc_pinSCK;
+  _uc_pinMosi = uc_pinMOSI;
 }
 #endif // ARDUINO_GENERIC
 
@@ -57,9 +57,15 @@ void SPIClass::begin()
 {
   init();
 
-  _p_spi->PSELSCK  = _uc_pinSCK;
-  _p_spi->PSELMOSI = _uc_pinMosi;
-  _p_spi->PSELMISO = _uc_pinMiso;
+  #ifdef NRF52840
+  _p_spi->PSELMISO = NRF_GPIO_PIN_MAP(g_ADigitalPinMap[_uc_pinMiso].ulPort,g_ADigitalPinMap[_uc_pinMiso].ulPin);
+  _p_spi->PSELSCK = NRF_GPIO_PIN_MAP(g_ADigitalPinMap[_uc_pinSCK].ulPort,g_ADigitalPinMap[_uc_pinSCK].ulPin);
+  _p_spi->PSELMOSI = NRF_GPIO_PIN_MAP(g_ADigitalPinMap[_uc_pinMosi].ulPort,g_ADigitalPinMap[_uc_pinMosi].ulPin);
+  #else
+  _p_spi->PSELMISO = g_ADigitalPinMap[_uc_pinMiso];
+  _p_spi->PSELSCK = g_ADigitalPinMap[_uc_pinSCK];
+  _p_spi->PSELMOSI = g_ADigitalPinMap[_uc_pinMosi];
+  #endif
 
   config(DEFAULT_SPI_SETTINGS);
 }

@@ -60,8 +60,11 @@ void attachInterrupt(uint32_t pin, voidFuncPtr callback, uint32_t mode)
   if (pin >= PINS_COUNT) {
     return;
   }
-
+  #ifdef NRF52840
+    pin = g_ADigitalPinMap[pin].ulPin;
+  #else
   pin = g_ADigitalPinMap[pin];
+  #endif
 
   uint32_t polarity;
 
@@ -109,7 +112,11 @@ void detachInterrupt(uint32_t pin)
     return;
   }
 
+  #ifdef NRF52840
+    pin = g_ADigitalPinMap[pin].ulPin;
+  #else
   pin = g_ADigitalPinMap[pin];
+  #endif
 
   for (int ch = 0; ch < NUMBER_OF_GPIO_TE; ch++) {
     if ((uint32_t)channelMap[ch] == pin) {
