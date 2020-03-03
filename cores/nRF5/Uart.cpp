@@ -73,18 +73,24 @@ void Uart::begin(unsigned long baudrate)
 
 void Uart::begin(unsigned long baudrate, uint16_t /*config*/)
 {
-  #ifdef NRF52840
+  #if defined(NRF52840)
   nrfUart->PSELTXD = NRF_GPIO_PIN_MAP(g_ADigitalPinMap[uc_pinTX].ulPort,g_ADigitalPinMap[uc_pinTX].ulPin);
   nrfUart->PSELRXD = NRF_GPIO_PIN_MAP(g_ADigitalPinMap[uc_pinRX].ulPort,g_ADigitalPinMap[uc_pinRX].ulPin);
+  #elif defined(NRF52810) || defined(NRF52811)
+  nrfUart->PSEL.TXD = g_ADigitalPinMap[uc_pinTX];
+  nrfUart->PSEL.RXD = g_ADigitalPinMap[uc_pinRX];
   #else
   nrfUart->PSELTXD = g_ADigitalPinMap[uc_pinTX];
   nrfUart->PSELRXD = g_ADigitalPinMap[uc_pinRX];
   #endif
 
   if (uc_hwFlow == 1) {
-    #ifdef NRF52840
+    #if defined(NRF52840)
     nrfUart->PSELCTS = NRF_GPIO_PIN_MAP(g_ADigitalPinMap[uc_pinCTS].ulPort,g_ADigitalPinMap[uc_pinCTS].ulPin);
     nrfUart->PSELRTS = NRF_GPIO_PIN_MAP(g_ADigitalPinMap[uc_pinRTS].ulPort,g_ADigitalPinMap[uc_pinRTS].ulPin);
+    #elif defined(NRF52810) || defined(NRF52811)
+    nrfUart->PSEL.CTS = g_ADigitalPinMap[uc_pinCTS];
+    nrfUart->PSEL.RTS = g_ADigitalPinMap[uc_pinRTS];
     #else
     nrfUart->PSELCTS = g_ADigitalPinMap[uc_pinCTS];
     nrfUart->PSELRTS = g_ADigitalPinMap[uc_pinRTS];
@@ -194,12 +200,19 @@ void Uart::end()
 
   nrfUart->ENABLE = UART_ENABLE_ENABLE_Disabled;
 
+  #if defined(NRF52810) || defined(NRF52811)
+  nrfUart->PSEL.TXD = 0xFFFFFFFF;
+  nrfUart->PSEL.RXD = 0xFFFFFFFF;
+
+  nrfUart->PSEL.RTS = 0xFFFFFFFF;
+  nrfUart->PSEL.CTS = 0xFFFFFFFF;
+  #else
   nrfUart->PSELTXD = 0xFFFFFFFF;
   nrfUart->PSELRXD = 0xFFFFFFFF;
 
   nrfUart->PSELRTS = 0xFFFFFFFF;
   nrfUart->PSELCTS = 0xFFFFFFFF;
-
+  #endif
   rxBuffer.clear();
 }
 
