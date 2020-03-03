@@ -39,43 +39,30 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
 
-#ifndef NRF52_NAME_CHANGE_H
-#define NRF52_NAME_CHANGE_H
+#ifndef NRF52810_TO_NRF52811_H
+#define NRF52810_TO_NRF52811_H
 
 /*lint ++flb "Enter library region */
 
-/* This file is given to prevent your SW from not compiling with the updates made to nrf52.h and 
- * nrf52_bitfields.h. The macros defined in this file were available previously. Do not use these
- * macros on purpose. Use the ones defined in nrf52.h and nrf52_bitfields.h instead.
- */
+/* This file is given to prevent your SW from not compiling with the name changes between nRF52810 and nRF52811 devices.
+ * It redefines the old nRF52810 names into the new ones as long as the functionality is still supported. If the
+ * functionality is gone, there old names are not defined, so compilation will fail. */
+ 
+/* Differences between latest nRF52810 headers and nRF52811 headers. */
 
-/* I2S */
-/* Several enumerations changed case. Adding old macros to keep compilation compatibility. */
-#define I2S_ENABLE_ENABLE_DISABLE           I2S_ENABLE_ENABLE_Disabled
-#define I2S_ENABLE_ENABLE_ENABLE            I2S_ENABLE_ENABLE_Enabled
-#define I2S_CONFIG_MODE_MODE_MASTER         I2S_CONFIG_MODE_MODE_Master
-#define I2S_CONFIG_MODE_MODE_SLAVE          I2S_CONFIG_MODE_MODE_Slave
-#define I2S_CONFIG_RXEN_RXEN_DISABLE        I2S_CONFIG_RXEN_RXEN_Disabled
-#define I2S_CONFIG_RXEN_RXEN_ENABLE         I2S_CONFIG_RXEN_RXEN_Enabled
-#define I2S_CONFIG_TXEN_TXEN_DISABLE        I2S_CONFIG_TXEN_TXEN_Disabled
-#define I2S_CONFIG_TXEN_TXEN_ENABLE         I2S_CONFIG_TXEN_TXEN_Enabled
-#define I2S_CONFIG_MCKEN_MCKEN_DISABLE      I2S_CONFIG_MCKEN_MCKEN_Disabled
-#define I2S_CONFIG_MCKEN_MCKEN_ENABLE       I2S_CONFIG_MCKEN_MCKEN_Enabled
-#define I2S_CONFIG_SWIDTH_SWIDTH_8BIT       I2S_CONFIG_SWIDTH_SWIDTH_8Bit
-#define I2S_CONFIG_SWIDTH_SWIDTH_16BIT      I2S_CONFIG_SWIDTH_SWIDTH_16Bit
-#define I2S_CONFIG_SWIDTH_SWIDTH_24BIT      I2S_CONFIG_SWIDTH_SWIDTH_24Bit
-#define I2S_CONFIG_ALIGN_ALIGN_LEFT         I2S_CONFIG_ALIGN_ALIGN_Left
-#define I2S_CONFIG_ALIGN_ALIGN_RIGHT        I2S_CONFIG_ALIGN_ALIGN_Right
-#define I2S_CONFIG_FORMAT_FORMAT_ALIGNED    I2S_CONFIG_FORMAT_FORMAT_Aligned
-#define I2S_CONFIG_CHANNELS_CHANNELS_STEREO I2S_CONFIG_CHANNELS_CHANNELS_Stereo
-#define I2S_CONFIG_CHANNELS_CHANNELS_LEFT   I2S_CONFIG_CHANNELS_CHANNELS_Left
-#define I2S_CONFIG_CHANNELS_CHANNELS_RIGHT  I2S_CONFIG_CHANNELS_CHANNELS_Right
+/* Interrupt service routines handlers. */
+#ifndef TWIM0_TWIS0_IRQHandler
+    #define TWIM0_TWIS0_IRQHandler      TWIM0_TWIS0_SPIM1_SPIS1_IRQHandler
+#endif
 
-/* LPCOMP */
-/* Corrected typo in RESULT register. */
-#define LPCOMP_RESULT_RESULT_Bellow         LPCOMP_RESULT_RESULT_Below
+
+/* Interrupt service routines index. */
+#ifndef TWIM0_TWIS0_IRQn
+    #define TWIM0_TWIS0_IRQn            TWIM0_TWIS0_SPIM1_SPIS1_IRQn
+#endif
+
 
 /*lint --flb "Leave library region" */
 
-#endif /* NRF52_NAME_CHANGE_H */
+#endif /* NRF52810_TO_NRF52811_H */
 
