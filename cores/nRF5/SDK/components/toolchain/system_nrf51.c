@@ -23,6 +23,9 @@ NOTICE: This file has been modified by Nordic Semiconductor ASA.
 /* NOTE: Template files (including this one) are application specific and therefore expected to
    be copied into the application project folder prior to its use! */
 
+
+#ifdef NRF51
+
 #include <stdint.h>
 #include <stdbool.h>
 #include "nrf.h"
@@ -141,3 +144,5 @@ static bool is_peripheral_domain_setup_needed(void)
 }
 
 /*lint --flb "Leave library region" */
+
+#endif
