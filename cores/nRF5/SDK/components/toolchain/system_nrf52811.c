@@ -23,6 +23,8 @@ NOTICE: This file has been modified by Nordic Semiconductor ASA.
 /* NOTE: Template files (including this one) are application specific and therefore expected to
    be copied into the application project folder prior to its use! */
 
+#ifdef NRF52811
+
 #include <stdint.h>
 #include <stdbool.h>
 #include "nrf.h"
@@ -72,7 +74,7 @@ void SystemInit(void)
         NRF_CLOCK->EVENTS_CTTO = 0;
         NRF_CLOCK->CTIV = 0;
     }
-    
+
     /* Workaround for Errata 66 "TEMP: Linearity specification not met with default settings" found at the Errata document
        for your device located at https://infocenter.nordicsemi.com/index.jsp  */
     if (errata_66()){
@@ -109,7 +111,7 @@ void SystemInit(void)
             *(volatile uint32_t *)0x40000EE4 = (*(volatile uint32_t *)0x40000EE4 & 0xFFFFFFF0) | (*(uint32_t *)0x10000258 & 0x0000000F);
         }
     #endif
-    
+
     /* Workaround for Errata 136 "System: Bits in RESETREAS are set when they should not be" found at the Errata document
        for your device located at https://infocenter.nordicsemi.com/index.jsp  */
     if (errata_136()){
@@ -123,7 +125,7 @@ void SystemInit(void)
     if (errata_217()){
         *(volatile uint32_t *)0x40000EE4ul |= 0x0000000Ful;
     }
-    
+
     /* Configure GPIO pads as pPin Reset pin if Pin Reset capabilities desired. If CONFIG_GPIO_AS_PINRESET is not
       defined, pin reset will not be available. One GPIO (see Product Specification to see which one) will then be
       reserved for PinReset and not available as normal GPIO. */
@@ -291,3 +293,5 @@ static bool errata_217(void)
 
 
 /*lint --flb "Leave library region" */
+
+#endif

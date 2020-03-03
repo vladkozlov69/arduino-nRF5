@@ -22,7 +22,9 @@ NOTICE: This file has been modified by Nordic Semiconductor ASA.
 
 /* NOTE: Template files (including this one) are application specific and therefore expected to
    be copied into the application project folder prior to its use! */
-   
+
+#ifdef NRF52840
+
 #include <stdint.h>
 #include <stdbool.h>
 #include "nrf.h"
@@ -75,7 +77,7 @@ void SystemInit(void)
         NRF_P0->PIN_CNF[11] = (GPIO_PIN_CNF_DRIVE_H0H1 << GPIO_PIN_CNF_DRIVE_Pos) | (GPIO_PIN_CNF_INPUT_Connect << GPIO_PIN_CNF_INPUT_Pos) | (GPIO_PIN_CNF_DIR_Output << GPIO_PIN_CNF_DIR_Pos);
         NRF_P1->PIN_CNF[9]  = (GPIO_PIN_CNF_DRIVE_H0H1 << GPIO_PIN_CNF_DRIVE_Pos) | (GPIO_PIN_CNF_INPUT_Connect << GPIO_PIN_CNF_INPUT_Pos) | (GPIO_PIN_CNF_DIR_Output << GPIO_PIN_CNF_DIR_Pos);
     #endif
-    
+
     /* Workaround for Errata 36 "CLOCK: Some registers are not reset when expected" found at the Errata document
        for your device located at https://infocenter.nordicsemi.com/index.jsp  */
     if (errata_36()){
@@ -83,7 +85,7 @@ void SystemInit(void)
         NRF_CLOCK->EVENTS_CTTO = 0;
         NRF_CLOCK->CTIV = 0;
     }
-    
+
     /* Workaround for Errata 66 "TEMP: Linearity specification not met with default settings" found at the Errata document
        for your device located at https://infocenter.nordicsemi.com/index.jsp  */
     if (errata_66()){
@@ -105,31 +107,31 @@ void SystemInit(void)
         NRF_TEMP->T3 = NRF_FICR->TEMP.T3;
         NRF_TEMP->T4 = NRF_FICR->TEMP.T4;
     }
-    
+
     /* Workaround for Errata 98 "NFCT: Not able to communicate with the peer" found at the Errata document
        for your device located at https://infocenter.nordicsemi.com/index.jsp  */
     if (errata_98()){
         *(volatile uint32_t *)0x4000568Cul = 0x00038148ul;
     }
-    
+
     /* Workaround for Errata 103 "CCM: Wrong reset value of CCM MAXPACKETSIZE" found at the Errata document
        for your device located at https://infocenter.nordicsemi.com/index.jsp  */
     if (errata_103()){
         NRF_CCM->MAXPACKETSIZE = 0xFBul;
     }
-    
+
     /* Workaround for Errata 115 "RAM: RAM content cannot be trusted upon waking up from System ON Idle or System OFF mode" found at the Errata document
        for your device located at https://infocenter.nordicsemi.com/index.jsp  */
     if (errata_115()){
         *(volatile uint32_t *)0x40000EE4ul = (*(volatile uint32_t *)0x40000EE4ul & 0xFFFFFFF0ul) | (*(uint32_t *)0x10000258ul & 0x0000000Ful);
     }
-    
+
     /* Workaround for Errata 120 "QSPI: Data read or written is corrupted" found at the Errata document
        for your device located at https://infocenter.nordicsemi.com/index.jsp  */
     if (errata_120()){
         *(volatile uint32_t *)0x40029640ul = 0x200ul;
     }
-    
+
     /* Workaround for Errata 136 "System: Bits in RESETREAS are set when they should not be" found at the Errata document
        for your device located at https://infocenter.nordicsemi.com/index.jsp  */
     if (errata_136()){
@@ -137,7 +139,7 @@ void SystemInit(void)
             NRF_POWER->RESETREAS =  ~POWER_RESETREAS_RESETPIN_Msk;
         }
     }
-    
+
     /* Enable the FPU if the compiler used floating point unit instructions. __FPU_USED is a MACRO defined by the
      * compiler. Since the FPU consumes energy, remember to disable FPU use in the compiler if floating point unit
      * operations are not used in your code. */
@@ -235,7 +237,7 @@ static bool errata_98(void)
             return true;
         }
     }
-    
+
     return false;
 }
 
@@ -247,7 +249,7 @@ static bool errata_103(void)
             return true;
         }
     }
-    
+
     return false;
 }
 
@@ -259,7 +261,7 @@ static bool errata_115(void)
             return true;
         }
     }
-    
+
     return false;
 }
 
@@ -271,7 +273,7 @@ static bool errata_120(void)
             return true;
         }
     }
-    
+
     return false;
 }
 
@@ -298,3 +300,5 @@ static bool errata_136(void)
 }
 
 /*lint --flb "Leave library region" */
+
+#endif
