@@ -39,8 +39,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
 
-#ifndef SYSTEM_NRF51_H
-#define SYSTEM_NRF51_H
+#ifndef SYSTEM_NRF52811_H
+#define SYSTEM_NRF52811_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -52,4 +52,4 @@ extern "C" {
 }
 #endif
 
-#endif /* SYSTEM_NRF51_H */
+#endif /* SYSTEM_NRF52811_H */

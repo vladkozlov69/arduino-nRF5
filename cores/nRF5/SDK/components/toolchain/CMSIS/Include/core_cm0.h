@@ -735,7 +735,7 @@ __STATIC_INLINE void NVIC_SystemReset(void)
                  SCB_AIRCR_SYSRESETREQ_Msk);
   __DSB();                                                          /* Ensure completion of memory access */
 
-  for(;;)                                                           /* wait until reset */
+  for (;;)                                                           /* wait until reset */
   {
     __NOP();
   }
