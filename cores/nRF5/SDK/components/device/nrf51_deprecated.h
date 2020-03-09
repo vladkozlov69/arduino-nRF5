@@ -37,7 +37,7 @@ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
 LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
 OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
- */
+*/
 
 #ifndef NRF51_DEPRECATED_H
 #define NRF51_DEPRECATED_H
@@ -56,8 +56,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  
 /* LPCOMP */
 /* The interrupt ISR was renamed. Adding old name to the macros. */
-#define LPCOMP_COMP_IRQHandler      LPCOMP_IRQHandler
-#define LPCOMP_COMP_IRQn            LPCOMP_IRQn
+#define LPCOMP_COMP_IRQHandler          LPCOMP_IRQHandler
+#define LPCOMP_COMP_IRQn                LPCOMP_IRQn
 /* Corrected typo in RESULT register. */
 #define LPCOMP_RESULT_RESULT_Bellow     LPCOMP_RESULT_RESULT_Below
  
@@ -441,7 +441,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define PPI_CHG3_CH0_Pos        PPI_CHG_CH0_Pos             
 #define PPI_CHG3_CH0_Msk        PPI_CHG_CH0_Msk             
 #define PPI_CHG3_CH0_Excluded   PPI_CHG_CH0_Excluded        
-#define PPI_CHG3_CH0_Included   PPI_CHG_CH0_Included        
+#define PPI_CHG3_CH0_Included   PPI_CHG_CH0_Included      
 
 /* SPIS */
 /* nRF51 devices do not have an SPIS0, only SPIS1. SPIS0_EASYDMA_MAXCNT_SIZE was therefore renamed. */

@@ -31,6 +31,20 @@ extern "C" {
 static uint32_t saadcReference = SAADC_CH_CONFIG_REFSEL_Internal;
 static uint32_t saadcGain      = SAADC_CH_CONFIG_GAIN_Gain1_5;
 
+#if defined(NRF52811) || defined(NRF52810)
+
+#define PWM_COUNT 1
+
+static NRF_PWM_Type* pwms[PWM_COUNT] = {
+	NRF_PWM0
+};
+
+static uint32_t pwmChannelPins[PWM_COUNT] = {
+	0xFFFFFFFF
+};
+
+#else
+
 #define PWM_COUNT 3
 
 static NRF_PWM_Type* pwms[PWM_COUNT] = {
@@ -44,6 +58,8 @@ static uint32_t pwmChannelPins[PWM_COUNT] = {
   0xFFFFFFFF,
   0xFFFFFFFF
 };
+#endif
+
 static uint16_t pwmChannelSequence[PWM_COUNT];
 
 static int readResolution = 10;

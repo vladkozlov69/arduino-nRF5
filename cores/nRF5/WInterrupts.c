@@ -132,6 +132,7 @@ void detachInterrupt(uint32_t pin)
   }
 }
 
+__attribute__ ((weak))
 void GPIOTE_IRQHandler()
 {
   uint32_t event = offsetof(NRF_GPIOTE_Type, EVENTS_IN[0]);
